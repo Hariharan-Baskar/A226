@@ -7,7 +7,8 @@ monthly_data <- aggregate(
 )
 colnames(monthly_data)[2] <- "Average_Volume" 
 head(monthly_data)
-monthly_data$month <- as.Date(paste0(monthly_data$"-01"),format ="%Y-%m-%d")
+monthly_data$month <- as.Date(paste0(monthly_data$month, "-01"), format = "%Y-%m-%d")
+
 
 plot(
   monthly_data$month,
