@@ -12,7 +12,7 @@ monthly_data$month <- as.Date(paste0(monthly_data$month, "-01"), format = "%Y-%m
 
 plot(
   monthly_data$month,
-  monthly_data$Volume,
+  monthly_data$Average_Volume,
   main="Scatterplot of Average Monthly Trading Volume",
   xlab="Month Year",
   ylab="Average Trading Volume",
@@ -21,5 +21,5 @@ plot(
   xaxt="n"
 )
 axis(1, at = monthly_data$ month, labels = format(monthly_data$month, "%b %Y"), las = 2, cex.axis =0.7)
-abline(lm(monthly_data$Volume ~
+abline(lm(monthly_data$Average_Volume ~
             monthly_data$month), col = "red")
