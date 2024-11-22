@@ -15,7 +15,8 @@ histogram <- hist(
   xlab = "Average Volume" ,
   ylab = "Frequency (Volume Ranges per Month) ",
   main = "Histogram of Average monthly trading volume",
-  breaks = "FD"
+  breaks = "FD",
+  xaxt = "n"
   )
 
 axis(1, at = pretty(monthly_volume$monthly_AVG_volume, n=20))
