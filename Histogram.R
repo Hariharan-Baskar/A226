@@ -4,7 +4,6 @@ data_sheet <-read.csv("GEEQ.csv")
 date <- as.Date(data_sheet$Date)
 data_sheet$Date <-date
 
-
 monthly_volume <- aggregate(cbind(monthly_AVG_volume = data_sheet$Volume),
                            list(month = format(data_sheet$Date,"%Y-%m")),
                             FUN = mean
