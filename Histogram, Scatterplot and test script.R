@@ -1,4 +1,5 @@
 library(readr)
+df <- read.csv("GEEQ.csv")
 
 #Data wrangling code 
 df$Date <- as.Date(df$Date)
@@ -32,7 +33,7 @@ axis(1, at = seq(min(tick_positions), max(tick_positions), by = diff(tick_positi
      labels = FALSE, tck = -0.01)#Minor ticks
 
 
-x <- seq(min(monthly_data$Average_Volume),
+x <- seq(0,
          max(monthly_data$Average_Volume), 
          length = 100)
 y <- dnorm(x,
@@ -42,7 +43,6 @@ y <- dnorm(x,
 
 y <- y * diff(histogram$mids[1:2])
 lines(x,y,col = "red")
-
 
 
 #Line graph code
@@ -59,4 +59,42 @@ plot(
 axis(1, at = monthly_data$ month, labels = format(monthly_data$month, "%b %Y"), las = 2, cex.axis =0.7)
 abline(lm(monthly_data$Average_Volume ~
             monthly_data$month), col = "red")
+
+
+# Statistical Tests to determine the normality:
+# Shapiro-Wilk test
+shapiro_test <- shapiro.test(monthly_data$Average_Volume)
+
+
+# Anderson-Darling Test:
+#install.packages('nortest')
+library(nortest)
+ad_test <- ad.test(monthly_data$Average_Volume)
+
+
+
+# checking the correlation based on the normality test values
+
+if (shapiro_test$p.value > 0.05 && ad_test$p.value > 0.05) {
+  # Using Pearson if data is normally distributed
+  correlation_test <- cor.test(
+    as.numeric(monthly_data$month), 
+    monthly_data$Average_Volume,
+    method = "pearson"
+  )
+} else {
+  # Using Spearman if data is not normally distributed
+  correlation_test <- cor.test(
+    as.numeric(monthly_data$month),
+    monthly_data$Average_Volume,
+    method = "spearman"
+  )
+}
+
+# Print the results of the normality and correlation test
+print(shapiro_test)
+print(ad_test)
+print(correlation_test)
+
+
 
